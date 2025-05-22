@@ -143,7 +143,7 @@ export default function Home() {
                 <div className="bg-pink-50 p-6 rounded-xl text-center">
                   <div className="mx-auto w-32 h-32 flex items-center justify-center bg-pink-500 rounded-full shadow-md mb-4">
                   </div>
-                  <h3 className="text-xl font-bold text-pink-800">Final Expenses</h3>
+                  <h3 className="text-xl font-bold text-pink-800">Final Expense</h3>
                   <p className="text-gray-600 mt-2">Coverage for end-of-life costs</p>
                 </div>
                 <div className="bg-blue-50 p-6 rounded-xl text-center">

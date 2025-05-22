@@ -1,10 +1,10 @@
 "use client"
 
 import { useState, ReactElement } from 'react';
-import { ChevronRight, Phone, Calendar, HelpCircle, Shield, Heart, Briefcase, Users } from 'lucide-react';
+import { ChevronRight, Phone, Calendar,  Shield, Heart, Briefcase, Users } from 'lucide-react';
 import Footer from '../components/footer';
 import Link from 'next/link';
-import Image from 'next/image';
+
 
 export default function InsuranceProductsPage() {
   const [activeTab, setActiveTab] = useState('health');
@@ -322,12 +322,20 @@ export default function InsuranceProductsPage() {
             Get personalized advice and quotes today.
           </p>
           <div className="flex flex-col md:flex-row gap-4 justify-center">
-            <button
+            <a
+              href="https://impactdeliverygroup.com/contact"
               className="bg-blue-800 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold inline-flex items-center"
             >
               <Phone size={20} className="mr-2" />
-              <a href='https://impactdeliverygroup.com/contact'>Schedule a Call</a>
-            </button>
+              Schedule a Call
+            </a>
+            <a
+              href="https://impactdeliverygroup.com/contact"
+              className="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-lg font-semibold inline-flex items-center"
+            >
+              <Calendar size={20} className="mr-2" />
+              Compare Plans
+            </a>
           </div>
         </div>
       </section>

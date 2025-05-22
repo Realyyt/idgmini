@@ -20,7 +20,7 @@ export default function QuoteForm({ insuranceType }: QuoteFormProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission
-    console.log('Form submitted:', formData);
+    console.log('Form submitted:', { ...formData, insuranceType });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -149,7 +149,7 @@ export default function QuoteForm({ insuranceType }: QuoteFormProps) {
           type="submit"
           className="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
-          Get Your Quote
+          Get Your {insuranceType} Quote
         </button>
       </div>
     </form>

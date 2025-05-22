@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, ReactElement } from 'react';
-import { ChevronRight, Phone, Calendar, HelpCircle, Shield, Heart, Briefcase, Users } from 'lucide-react';
+import { ChevronRight, Phone, Calendar, Shield, Heart, Briefcase, Users } from 'lucide-react';
 import Footer from './components/footer';
 import Link from 'next/link';
 import Image from 'next/image';

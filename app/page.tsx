@@ -335,7 +335,7 @@ export default function Home() {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6 text-blue-900">Need Help Choosing?</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-            Our licensed insurance providers are ready to help you find the right coverage for your needs.
+            Our insurance providers are ready to help you find the right coverage for your needs.
             Get personalized advice and quotes today.
           </p>
           <div className="flex flex-col md:flex-row gap-4 justify-center">

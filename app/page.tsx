@@ -64,7 +64,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="bg-blue-800 text-white py-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl font-bold mb-6">PERSONAL PROTECTION: Our Insurance Products</h1>
+          <h1 className="text-4xl font-bold mb-6">PROPER PROTECTION: Our Insurance Products</h1>
           <p className="text-xl max-w-3xl mx-auto mb-10">
             Securing Policies, Protecting Clients: We provide dedicated support to ensure the successful 
             completion of insurance applications and the issuance of policies. Protect your future today—choose 

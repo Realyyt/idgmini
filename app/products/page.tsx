@@ -2,43 +2,17 @@
 
 import { useState, ReactElement } from 'react';
 import { ChevronRight, Phone, Calendar, HelpCircle, Shield, Heart, Briefcase, Users } from 'lucide-react';
-import Footer from './components/footer';
+import Footer from '../components/footer';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function Home() {
+export default function InsuranceProductsPage() {
   const [activeTab, setActiveTab] = useState('health');
 
-  // Product display name mapping
-  const productDisplayNames: { [key: string]: string } = {
-    // Health Insurance Products
-    'accident-insurance': 'Accident Insurance',
-    'aca-marketplace': 'ACA Marketplace Plans',
-    'critical-illness': 'Critical Illness Insurance',
-    'dental-vision': 'Dental & Vision',
-    'group-health': 'Group Health Plans',
-    'individual-family': 'Individual & Family Health Plans',
-    'short-term-medical': 'Short-Term Medical Plans',
-    'supplemental-health': 'Supplemental Health Plans',
-    'medicare-supplement': 'Medicare Supplement/Medigap Plan',
-    'medicare-advantage': 'Medicare Advantage Plan – MA Plan',
-    'medicare-advantage-pdp': 'Medicare Advantage Prescription Drug Plan – MA-PDP',
-    'prescription-drug-plan': 'Prescription Drug Plan – PDP',
-    // Life Insurance Products
-    'term-life': 'Term Life Insurance',
-    'whole-life': 'Whole Life Insurance',
-    'universal-life': 'Universal Life Insurance',
-    'indexed-universal-life': 'Indexed Universal Life Insurance',
-    'final-expense': 'Final Expense Insurance',
-    'group-life': 'Group Life Insurance',
-    'survivorship-life': 'Survivorship Life Insurance',
-    'accidental-death': 'Accidental Death and Dismemberment (AD&D) Insurance'
-  };
-
-  // Product icon mapping
+  // Product image maps - in a real app these would be actual image imports
   const productIcons: { [key: string]: ReactElement } = {
     'Accident Insurance': <Shield size={48} className="text-blue-600" />,
-    'ACA Marketplace Plans': <Heart size={48} className="text-blue-600" />,
+    'Affordable Care Act (ACA) Marketplace Plans': <Heart size={48} className="text-blue-600" />,
     'Critical Illness Insurance': <Shield size={48} className="text-red-600" />,
     'Dental & Vision': <Shield size={48} className="text-cyan-600" />,
     'Group Health Plans': <Users size={48} className="text-blue-600" />,
@@ -59,8 +33,35 @@ export default function Home() {
     'Accidental Death and Dismemberment (AD&D) Insurance': <Shield size={48} className="text-red-600" />
   };
 
+  // Product display name mapping
+  const productDisplayNames: { [key: string]: string } = {
+    'accident-insurance': 'Accident Insurance',
+    'aca-marketplace': 'ACA Marketplace Plans',
+    'critical-illness': 'Critical Illness Insurance',
+    'dental-vision': 'Dental & Vision',
+    'group-health': 'Group Health Plans',
+    'individual-family': 'Individual & Family Health Plans',
+    'short-term-medical': 'Short-Term Medical Plans',
+    'supplemental-health': 'Supplemental Health Plans',
+    'medicare-supplement': 'Medicare Supplement/Medigap Plan',
+    'medicare-advantage': 'Medicare Advantage Plan – MA Plan',
+    'medicare-advantage-pdp': 'Medicare Advantage Prescription Drug Plan – MA-PDP',
+    'prescription-drug-plan': 'Prescription Drug Plan – PDP',
+    'term-life': 'Term Life Insurance',
+    'whole-life': 'Whole Life Insurance',
+    'universal-life': 'Universal Life Insurance',
+    'indexed-universal-life': 'Indexed Universal Life Insurance',
+    'final-expense': 'Final Expense Insurance',
+    'group-life': 'Group Life Insurance',
+    'survivorship-life': 'Survivorship Life Insurance',
+    'accidental-death': 'Accidental Death and Dismemberment (AD&D) Insurance'
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
+      {/* Header */}
+     
+
       {/* Hero Section */}
       <section className="bg-blue-800 text-white py-16">
         <div className="container mx-auto px-4 text-center">
@@ -84,7 +85,7 @@ export default function Home() {
               Life Insurance
             </button>
           </div>
-          <a href="/contact" className="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-lg font-semibold inline-flex items-center">
+          <a href="https://impactdeliverygroup.com/contact" className="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-lg font-semibold inline-flex items-center">
             <Phone size={20} className="mr-2" />
             Get Help from a Licensed Insurance Provider
           </a>
@@ -143,7 +144,7 @@ export default function Home() {
                 <div className="bg-pink-50 p-6 rounded-xl text-center">
                   <div className="mx-auto w-32 h-32 flex items-center justify-center bg-pink-500 rounded-full shadow-md mb-4">
                   </div>
-                  <h3 className="text-xl font-bold text-pink-800">Final Expenses</h3>
+                  <h3 className="text-xl font-bold text-pink-800">Final Expense</h3>
                   <p className="text-gray-600 mt-2">Coverage for end-of-life costs</p>
                 </div>
                 <div className="bg-blue-50 p-6 rounded-xl text-center">
@@ -182,9 +183,9 @@ export default function Home() {
                   <div key={index} className="border rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow bg-white">
                     <div className="flex items-center mb-4">
                       <div className="mr-4">
-                        {productIcons[productDisplayNames[product.name]]}
+                        {productIcons[productDisplayNames[product.name] || product.name]}
                       </div>
-                      <h3 className="text-xl font-bold text-blue-800">{productDisplayNames[product.name]}</h3>
+                      <h3 className="text-xl font-bold text-blue-800">{productDisplayNames[product.name] || product.name}</h3>
                     </div>
                     <p className="text-gray-600 mb-4">{product.desc}</p>
                     <div className="flex gap-3 mt-4">
@@ -229,9 +230,9 @@ export default function Home() {
                   <div key={index} className="border rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow bg-white">
                     <div className="flex items-center mb-4">
                       <div className="mr-4">
-                        {productIcons[productDisplayNames[product.name]]}
+                        {productIcons[productDisplayNames[product.name] || product.name]}
                       </div>
-                      <h3 className="text-xl font-bold text-blue-800">{productDisplayNames[product.name]}</h3>
+                      <h3 className="text-xl font-bold text-blue-800">{productDisplayNames[product.name] || product.name}</h3>
                     </div>
                     <p className="text-gray-600 mb-4">{product.desc}</p>
                     <div className="flex gap-3 mt-4">
@@ -265,13 +266,7 @@ export default function Home() {
           
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-gray-50 rounded-xl overflow-hidden shadow-md">
-              <div className="relative w-full h-48">
-          <Image
-                  src="/placeholder.svg"
-                  alt="Individual Plan"
-                  fill
-                  className="object-cover rounded-t-lg"
-                />
+              <div className="relative w-full h-48 bg-gradient-to-br from-blue-400 to-blue-600">
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-blue-800 mb-2">
@@ -286,13 +281,7 @@ export default function Home() {
             </div>
             
             <div className="bg-gray-50 rounded-xl overflow-hidden shadow-md">
-              <div className="relative w-full h-48">
-          <Image
-                  src="/placeholder.svg"
-                  alt="Family Plan"
-                  fill
-                  className="object-cover rounded-t-lg"
-                />
+              <div className="relative w-full h-48 bg-gradient-to-br from-green-400 to-green-600">
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-blue-800 mb-2">
@@ -307,13 +296,7 @@ export default function Home() {
             </div>
             
             <div className="bg-gray-50 rounded-xl overflow-hidden shadow-md">
-              <div className="relative w-full h-48">
-          <Image
-                  src="/placeholder.svg"
-                  alt="Specialized Plan"
-                  fill
-                  className="object-cover rounded-t-lg"
-                />
+              <div className="relative w-full h-48 bg-gradient-to-br from-purple-400 to-purple-600">
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-blue-800 mb-2">
@@ -343,13 +326,7 @@ export default function Home() {
               className="bg-blue-800 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold inline-flex items-center"
             >
               <Phone size={20} className="mr-2" />
-              <a href='/contact'>Schedule a Call</a>
-            </button>
-            <button
-              className="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-lg font-semibold inline-flex items-center"
-            >
-              <HelpCircle size={20} className="mr-2" />
-              <a href='/contact'>Compare Plans</a>
+              <a href='https://impactdeliverygroup.com/contact'>Schedule a Call</a>
             </button>
           </div>
         </div>
@@ -359,4 +336,4 @@ export default function Home() {
       <Footer/>
     </div>
   );
-}
+} 

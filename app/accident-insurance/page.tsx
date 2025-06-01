@@ -29,7 +29,7 @@ function FlyersSection({ productType }: { productType: string }) {
   useEffect(() => {
     const loadFlyers = async () => {
       try {
-        const response = await fetch('/api/admin/flyers');
+        const response = await fetch('/api/flyers');
         const data = await response.json();
         if (data.success && data.flyers[productType]) {
           setFlyers(data.flyers[productType].filter((f: FlyerMetadata) => f.imageUrl));

@@ -40,15 +40,7 @@ async function checkAuth() {
 // GET - Retrieve all flyer images
 export async function GET(): Promise<NextResponse<FlyersResponse>> {
   try {
-    // Check authentication
-    const isAuthenticated = await checkAuth();
-    if (!isAuthenticated) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
+    // Remove authentication check for public access
     const { data: flyers, error } = await supabase
       .from('flyers')
       .select('*');

@@ -13,6 +13,18 @@ interface FlyersResponse {
   error?: string;
 }
 
+// Add this type for Supabase row
+type FlyerRow = {
+  id: number;
+  product_type: string;
+  flyer_index: number;
+  name: string;
+  description: string;
+  image_url: string;
+  created_at: string;
+  updated_at: string;
+};
+
 // GET - Retrieve all flyer images (public access)
 export async function GET(): Promise<NextResponse<FlyersResponse>> {
   try {
@@ -27,7 +39,7 @@ export async function GET(): Promise<NextResponse<FlyersResponse>> {
 
     // Group flyers by product type
     const groupedFlyers: Record<string, FlyerMetadata[]> = {};
-    flyers.forEach((flyer: any) => {
+    flyers.forEach((flyer: FlyerRow) => {
       try {
         if (!flyer.image_url || flyer.image_url === 'EMPTY') {
           console.warn('Skipping flyer without imageUrl:', flyer);

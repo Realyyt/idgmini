@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/app/lib/supabase';
+import { cookies } from 'next/headers';
 
 interface FlyerMetadata {
   name: string;
@@ -13,14 +14,49 @@ interface FlyersResponse {
   error?: string;
 }
 
+// Authentication check helper
+async function checkAuth() {
+  const cookieStore = await cookies();
+  const sessionToken = cookieStore.get('admin-session');
+
+  if (sessionToken && sessionToken.value) {
+    try {
+      const decoded = atob(sessionToken.value);
+      const [username, timestamp] = decoded.split(':');
+      const sessionAge = Date.now() - parseInt(timestamp);
+      
+      // Check if session is still valid (24 hours)
+      if (sessionAge < 60 * 60 * 24 * 1000 && username === (process.env.ADMIN_USERNAME || 'admin')) {
+        return true;
+      }
+    } catch {
+      // Invalid token format
+    }
+  }
+  
+  return false;
+}
+
 // GET - Retrieve all flyer images
 export async function GET(): Promise<NextResponse<FlyersResponse>> {
   try {
+    // Check authentication
+    const isAuthenticated = await checkAuth();
+    if (!isAuthenticated) {
+      return NextResponse.json(
+        { success: false, error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
     const { data: flyers, error } = await supabase
       .from('flyers')
       .select('*');
 
-    if (error) throw error;
+    if (error) {
+      console.error('Supabase error:', error);
+      throw error;
+    }
 
     // Group flyers by product type
     const groupedFlyers: Record<string, FlyerMetadata[]> = {};

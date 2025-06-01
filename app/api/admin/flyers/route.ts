@@ -16,15 +16,34 @@ interface FlyersResponse {
 // GET - Retrieve all flyer images
 export async function GET(): Promise<NextResponse<FlyersResponse>> {
   try {
-    // Remove authentication check for public access
+    console.log('Fetching flyers from Supabase...');
+    
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      console.error('Missing Supabase environment variables');
+      return NextResponse.json(
+        { success: false, error: 'Server configuration error' },
+        { status: 500 }
+      );
+    }
+
     const { data: flyers, error } = await supabase
       .from('flyers')
       .select('*');
 
     if (error) {
       console.error('Supabase error:', error);
-      throw error;
+      return NextResponse.json(
+        { success: false, error: 'Database error' },
+        { status: 500 }
+      );
     }
+
+    if (!flyers) {
+      console.log('No flyers found');
+      return NextResponse.json({ success: true, flyers: {} });
+    }
+
+    console.log(`Found ${flyers.length} flyers`);
 
     // Group flyers by product type
     const groupedFlyers: Record<string, FlyerMetadata[]> = {};
@@ -38,9 +57,9 @@ export async function GET(): Promise<NextResponse<FlyersResponse>> {
 
     return NextResponse.json({ success: true, flyers: groupedFlyers });
   } catch (error) {
-    console.error('Error fetching flyers:', error);
+    console.error('Unexpected error in GET /api/admin/flyers:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to fetch flyers' },
+      { success: false, error: 'Internal server error' },
       { status: 500 }
     );
   }

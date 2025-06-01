@@ -27,13 +27,18 @@ export async function GET(): Promise<NextResponse<FlyersResponse>> {
     }
 
     const { data: flyers, error } = await supabase
-      .from('flyers')
+      .from('flyer_metadata')
       .select('*');
 
     if (error) {
-      console.error('Supabase error:', error);
+      console.error('Supabase error details:', {
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+        code: error.code
+      });
       return NextResponse.json(
-        { success: false, error: 'Database error' },
+        { success: false, error: 'Database error: ' + error.message },
         { status: 500 }
       );
     }

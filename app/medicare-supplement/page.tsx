@@ -1,52 +1,48 @@
 "use client"
 
-import { useState } from 'react';
-import { Heart, Download, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Shield, Download, ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
 
 import Footer from '../components/footer';
 import QuoteForm from '../components/QuoteForm';
 
+interface FlyerMetadata {
+  name: string;
+  description: string;
+  imageUrl: string;
+}
+
 const product = {
-  name: 'MEDICARE SUPPLEMENT INSURANCE',
-  icon: <Heart size={48} className="text-blue-600" />,
-  description: 'Helps cover costs that Original Medicare doesn\'t cover, such as copayments, coinsurance, and deductibles.',
-  flyers: [
-    { title: 'Medigap Plan Comparison', description: 'Compare different Medicare Supplement plans (A through N)' },
-    { title: 'Enrollment Guide', description: 'When and how to enroll in Medicare Supplement insurance' },
-    { title: 'Cost Comparison Tool', description: 'Compare premiums and out-of-pocket costs across plans' },
-    { title: 'Coverage Details by Plan', description: 'What each Medigap plan covers' },
-    { title: 'Guaranteed Issue Rights', description: 'When you can enroll without medical underwriting' },
-    { title: 'Open Enrollment Guide', description: 'Your 6-month Medigap open enrollment period' },
-    { title: 'Plan F and C Eligibility', description: 'Who can still enroll in these plans' },
-    { title: 'High-Deductible Plan F', description: 'Details about this cost-saving option' },
-    { title: 'Travel Coverage', description: 'How Medigap covers you while traveling' },
-    { title: 'Prescription Drug Coverage', description: 'Understanding Part D with Medigap' },
-    { title: 'Switching Plans Guide', description: 'How to change your Medigap plan' },
-    { title: 'State-Specific Rules', description: 'Special rules in your state' },
-    { title: 'Cost-Saving Tips', description: 'Ways to reduce your Medigap premiums' },
-    { title: 'Preventive Care Coverage', description: 'What preventive services are covered' },
-    { title: 'Foreign Travel Emergency', description: 'Coverage while traveling abroad' },
-    { title: 'Plan Selection Guide', description: 'How to choose the right plan for you' },
-    { title: 'Premium Payment Options', description: 'Different ways to pay your premiums' },
-    { title: 'Claims Process', description: 'How to file and track claims' },
-    { title: 'Provider Network Guide', description: 'Using any doctor who accepts Medicare' },
-    { title: 'Renewal Information', description: 'What to expect when renewing your policy' },
-    { title: 'Disability Coverage', description: 'Options for those under 65' },
-    { title: 'Family Coverage Options', description: 'Coverage for spouses and dependents' },
-    { title: 'Medicare Advantage vs. Medigap', description: 'Comparing your coverage options' },
-    { title: 'Long-Term Care Options', description: 'Additional coverage for long-term care' },
-    { title: 'Dental and Vision Coverage', description: 'Supplemental coverage options' },
-    { title: 'Hearing Aid Coverage', description: 'Options for hearing aid benefits' },
-    { title: 'Wellness Benefits', description: 'Additional health and wellness programs' },
-    { title: 'Telehealth Services', description: 'Virtual care coverage details' },
-    { title: 'Emergency Coverage', description: 'What\'s covered in emergencies' },
-    { title: 'Customer Service Guide', description: 'How to get help with your coverage' }
-  ]
+  name: 'MEDICARE SUPPLEMENT',
+  icon: <Shield size={48} className="text-blue-600" />,
+  description: 'Additional coverage to fill gaps in Original Medicare.',
+  type: 'medicare-supplement'
 };
 
-function FlyersSection({ flyers }: { flyers: { title: string, description: string }[] }) {
+function FlyersSection({ productType }: { productType: string }) {
   const [currentPage, setCurrentPage] = useState(1);
+  const [flyers, setFlyers] = useState<FlyerMetadata[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const flyersPerPage = 6;
+  
+  useEffect(() => {
+    const loadFlyers = async () => {
+      try {
+        const response = await fetch('/api/admin/flyers');
+        const data = await response.json();
+        if (data.success && data.flyers[productType]) {
+          setFlyers(data.flyers[productType].filter((f: FlyerMetadata) => f.imageUrl));
+        }
+      } catch (error) {
+        console.error('Error loading flyers:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadFlyers();
+  }, [productType]);
   
   // Calculate total pages
   const totalPages = Math.ceil(flyers.length / flyersPerPage);
@@ -69,40 +65,56 @@ function FlyersSection({ flyers }: { flyers: { title: string, description: strin
     }
   };
 
+  if (isLoading) {
+    return (
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center">Loading flyers...</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (flyers.length === 0) {
+    return (
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center text-gray-600">No flyers available yet.</div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center text-blue-900 mb-8">Product Flyers & Resources</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {currentFlyers.map((flyer: { title: string, description: string }, index: number) => (
+          {currentFlyers.map((flyer, index) => (
             <div 
               key={index} 
               className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
             >
-              {/* Plain colored background */}
-              <div 
-                className="w-full h-48 mb-4 rounded flex items-center justify-center"
-                style={{ backgroundColor: `hsl(${index * 30}, 50%, 80%)` }} // Generates different colors
-              >
-                
+              <div className="relative w-full h-48 mb-4 rounded overflow-hidden">
+                <Image
+                  src={flyer.imageUrl}
+                  alt={flyer.name || `Flyer ${index + 1}`}
+                  fill
+                  className="object-cover"
+                />
               </div>
               
-              <h3 className="text-lg font-semibold text-blue-800 mb-2">{flyer.title}</h3>
-              <p className="text-gray-600 mb-4">{flyer.description}</p>
+              <h3 className="text-lg font-semibold text-blue-800 mb-2">{flyer.name || `Flyer ${index + 1}`}</h3>
+              <p className="text-gray-600 mb-4">{flyer.description || 'No description available'}</p>
               
               <div className="flex justify-between items-center">
                 <a 
-                  href="#" 
-                  className="text-blue-600 hover:text-blue-800 font-medium flex items-center"
-                >
-                  View Details
-                </a>
-                <button 
+                  href={`/api/download?url=${encodeURIComponent(flyer.imageUrl)}`}
                   className="flex items-center gap-1 bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded-full text-sm transition-colors"
                 >
                   <Download size={16} /> Download
-                </button>
+                </a>
               </div>
             </div>
           ))}
@@ -160,7 +172,7 @@ export default function ProductDetail() {
       </section>
 
       {/* Flyers Section */}
-      <FlyersSection flyers={product.flyers} />
+      <FlyersSection productType={product.type} />
 
       {/* Quote Form */}
       <section className="py-16 bg-gray-100">

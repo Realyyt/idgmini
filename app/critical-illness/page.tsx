@@ -14,10 +14,10 @@ interface FlyerMetadata {
 }
 
 const product = {
-  name: 'MEDICARE ADVANTAGE',
+  name: 'CRITICAL ILLNESS INSURANCE',
   icon: <Shield size={48} className="text-blue-600" />,
-  description: 'All-in-one Medicare coverage through private insurance companies.',
-  type: 'medicare-advantage'
+  description: 'Financial protection against major illnesses with lump-sum benefits.',
+  type: 'critical-illness'
 };
 
 function FlyersSection({ productType }: { productType: string }) {

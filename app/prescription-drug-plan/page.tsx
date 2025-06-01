@@ -14,10 +14,10 @@ interface FlyerMetadata {
 }
 
 const product = {
-  name: 'MEDICARE ADVANTAGE',
+  name: 'PRESCRIPTION DRUG PLAN',
   icon: <Shield size={48} className="text-blue-600" />,
-  description: 'All-in-one Medicare coverage through private insurance companies.',
-  type: 'medicare-advantage'
+  description: 'Standalone prescription drug coverage through Medicare Part D.',
+  type: 'prescription-drug-plan'
 };
 
 function FlyersSection({ productType }: { productType: string }) {

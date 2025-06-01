@@ -14,10 +14,10 @@ interface FlyerMetadata {
 }
 
 const product = {
-  name: 'MEDICARE ADVANTAGE',
+  name: 'SHORT-TERM MEDICAL',
   icon: <Shield size={48} className="text-blue-600" />,
-  description: 'All-in-one Medicare coverage through private insurance companies.',
-  type: 'medicare-advantage'
+  description: 'Temporary health coverage for life transitions.',
+  type: 'short-term-medical'
 };
 
 function FlyersSection({ productType }: { productType: string }) {

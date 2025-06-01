@@ -14,10 +14,10 @@ interface FlyerMetadata {
 }
 
 const product = {
-  name: 'MEDICARE ADVANTAGE',
+  name: 'INDIVIDUAL & FAMILY PLANS',
   icon: <Shield size={48} className="text-blue-600" />,
-  description: 'All-in-one Medicare coverage through private insurance companies.',
-  type: 'medicare-advantage'
+  description: 'Personalized health coverage for individuals and families.',
+  type: 'individual-family'
 };
 
 function FlyersSection({ productType }: { productType: string }) {

@@ -14,10 +14,10 @@ interface FlyerMetadata {
 }
 
 const product = {
-  name: 'MEDICARE ADVANTAGE',
+  name: 'DENTAL & VISION INSURANCE',
   icon: <Shield size={48} className="text-blue-600" />,
-  description: 'All-in-one Medicare coverage through private insurance companies.',
-  type: 'medicare-advantage'
+  description: 'Comprehensive coverage for dental and vision care needs.',
+  type: 'dental-vision'
 };
 
 function FlyersSection({ productType }: { productType: string }) {

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Upload, Trash2, Eye, Filter, Search, RefreshCw, Shield, Heart, Briefcase, TrendingUp, LogOut } from 'lucide-react';
+import { Upload, Eye, Filter, Search, RefreshCw, Shield, Heart, Briefcase, TrendingUp, LogOut } from 'lucide-react';
 import Image from 'next/image';
 
 interface Product {
@@ -11,8 +11,14 @@ interface Product {
   flyerCount: number;
 }
 
+interface FlyerMetadata {
+  name: string;
+  description: string;
+  imageUrl: string;
+}
+
 interface FlyerImages {
-  [productType: string]: string[];
+  [productType: string]: FlyerMetadata[];
 }
 
 const categoryIcons = {
@@ -38,6 +44,7 @@ export default function AdminDashboard() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [uploadingFlyer, setUploadingFlyer] = useState<string | null>(null);
+  const [editingFlyer, setEditingFlyer] = useState<{ productType: string; index: number } | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authChecking, setAuthChecking] = useState(true);
   const router = useRouter();
@@ -98,10 +105,21 @@ export default function AdminDashboard() {
     try {
       const response = await fetch('/api/admin/flyers');
       const data = await response.json();
+      
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to load flyers');
+      }
+      
       setFlyerImages(data.flyers || {});
       setIsLoading(false);
     } catch (error) {
       console.error('Error loading flyer images:', error);
+      // Show error toast
+      const toast = document.createElement('div');
+      toast.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+      toast.textContent = error instanceof Error ? error.message : 'Failed to load flyers';
+      document.body.appendChild(toast);
+      setTimeout(() => document.body.removeChild(toast), 3000);
       setIsLoading(false);
     }
   };
@@ -147,33 +165,40 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleDeleteImage = async (filename: string) => {
-    if (!confirm('Are you sure you want to delete this image?')) return;
-
+  const handleEditFlyer = async (productType: string, index: number, metadata: FlyerMetadata) => {
     try {
-      const response = await fetch(`/api/admin/flyers?filename=${encodeURIComponent(filename)}`, {
-        method: 'DELETE',
+      const response = await fetch('/api/admin/flyers/metadata', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productType,
+          index,
+          metadata,
+        }),
       });
 
       const data = await response.json();
       
       if (data.success) {
-        await loadFlyerImages(); // Reload to remove deleted image
+        await loadFlyerImages();
+        setEditingFlyer(null);
         // Show success toast
         const toast = document.createElement('div');
         toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-        toast.textContent = 'Image deleted successfully!';
+        toast.textContent = 'Flyer updated successfully!';
         document.body.appendChild(toast);
         setTimeout(() => document.body.removeChild(toast), 3000);
       } else {
         throw new Error(data.error);
       }
     } catch (error) {
-      console.error('Error deleting file:', error);
+      console.error('Error updating flyer:', error);
       // Show error toast
       const toast = document.createElement('div');
       toast.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-      toast.textContent = 'Delete failed: ' + error;
+      toast.textContent = 'Update failed: ' + error;
       document.body.appendChild(toast);
       setTimeout(() => document.body.removeChild(toast), 3000);
     }
@@ -188,7 +213,7 @@ export default function AdminDashboard() {
   });
 
   // Get current flyer images for a product
-  const getProductImages = (productType: string): string[] => {
+  const getProductImages = (productType: string): FlyerMetadata[] => {
     return flyerImages[productType] || [];
   };
 
@@ -417,10 +442,10 @@ export default function AdminDashboard() {
                     {getFlyerIndexes(selectedProduct).map((index) => {
                       const flyerKey = `${selectedProduct}_${index}`;
                       const existingImages = getProductImages(selectedProduct);
-                      const currentImage = existingImages.find(img => 
-                        img.includes(`${selectedProduct}_${index}_`)
-                      );
+                      const currentImage = existingImages[index];
                       const isUploading = uploadingFlyer === flyerKey;
+                      const flyer = currentImage || { name: '', description: '', imageUrl: '' };
+                      const isEditing = editingFlyer?.productType === selectedProduct && editingFlyer?.index === index;
 
                       return (
                         <div
@@ -428,10 +453,10 @@ export default function AdminDashboard() {
                           className="group border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-all duration-200 hover:border-blue-300"
                         >
                           <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg mb-4 overflow-hidden relative">
-                            {currentImage ? (
+                            {flyer.imageUrl ? (
                               <div className="relative h-full">
                                 <Image
-                                  src={currentImage}
+                                  src={flyer.imageUrl}
                                   alt={`Flyer ${index + 1}`}
                                   fill
                                   className="object-cover"
@@ -439,18 +464,11 @@ export default function AdminDashboard() {
                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-200" />
                                 <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                                   <button
-                                    onClick={() => window.open(currentImage, '_blank')}
+                                    onClick={() => window.open(flyer.imageUrl, '_blank')}
                                     className="bg-white/90 hover:bg-white p-2 rounded-lg shadow-sm transition-colors"
                                     title="View full size"
                                   >
                                     <Eye size={14} />
-                                  </button>
-                                  <button
-                                    onClick={() => handleDeleteImage(currentImage.split('/').pop()!)}
-                                    className="bg-red-500/90 hover:bg-red-500 text-white p-2 rounded-lg shadow-sm transition-colors"
-                                    title="Delete image"
-                                  >
-                                    <Trash2 size={14} />
                                   </button>
                                 </div>
                               </div>
@@ -473,18 +491,98 @@ export default function AdminDashboard() {
 
                           <div className="text-sm font-semibold text-gray-900 mb-3">Flyer #{index + 1}</div>
                           
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                handleFileUpload(file, selectedProduct, index);
-                              }
-                            }}
-                            disabled={isUploading}
-                            className="w-full text-xs file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 file:transition-colors cursor-pointer"
-                          />
+                          {flyer.imageUrl ? (
+                            <div className="space-y-3">
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (file) {
+                                    handleFileUpload(file, selectedProduct, index);
+                                  }
+                                }}
+                                disabled={isUploading}
+                                className="hidden"
+                                id={`file-${selectedProduct}-${index}`}
+                              />
+                              <button
+                                onClick={() => document.getElementById(`file-${selectedProduct}-${index}`)?.click()}
+                                disabled={isUploading}
+                                className="w-full flex items-center justify-center gap-2 bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                              >
+                                <Upload size={16} />
+                                {isUploading ? 'Updating...' : 'Update Image'}
+                              </button>
+                            </div>
+                          ) : (
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                  handleFileUpload(file, selectedProduct, index);
+                                }
+                              }}
+                              disabled={isUploading}
+                              className="w-full text-xs file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 file:transition-colors cursor-pointer"
+                            />
+                          )}
+
+                          {isEditing ? (
+                            <div className="space-y-4 mt-2">
+                              <input
+                                type="text"
+                                value={flyer.name}
+                                onChange={(e) => {
+                                  const newFlyers = [...getProductImages(selectedProduct)];
+                                  newFlyers[index] = { ...flyer, name: e.target.value };
+                                  setFlyerImages({ ...flyerImages, [selectedProduct]: newFlyers });
+                                }}
+                                className="w-full p-2 border rounded"
+                                placeholder="Flyer Name"
+                              />
+                              <textarea
+                                value={flyer.description}
+                                onChange={(e) => {
+                                  const newFlyers = [...getProductImages(selectedProduct)];
+                                  newFlyers[index] = { ...flyer, description: e.target.value };
+                                  setFlyerImages({ ...flyerImages, [selectedProduct]: newFlyers });
+                                }}
+                                className="w-full p-2 border rounded"
+                                placeholder="Flyer Description"
+                                rows={3}
+                              />
+                              <div className="flex space-x-2">
+                                <button
+                                  onClick={() => handleEditFlyer(selectedProduct, index, flyer)}
+                                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                >
+                                  Save
+                                </button>
+                                <button
+                                  onClick={() => setEditingFlyer(null)}
+                                  className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="flex justify-between items-start mt-2">
+                              <div>
+                                <h4 className="font-medium">{flyer.name || `Flyer ${index + 1}`}</h4>
+                                <p className="text-sm text-gray-600">{flyer.description || 'No description'}</p>
+                              </div>
+                              <button
+                                onClick={() => setEditingFlyer({ productType: selectedProduct, index })}
+                                className="text-blue-500 hover:text-blue-600"
+                              >
+                                Edit
+                              </button>
+                            </div>
+                          )}
                         </div>
                       );
                     })}

@@ -14,10 +14,10 @@ interface FlyerMetadata {
 }
 
 const product = {
-  name: 'MEDICARE ADVANTAGE',
+  name: 'SUPPLEMENTAL HEALTH',
   icon: <Shield size={48} className="text-blue-600" />,
-  description: 'All-in-one Medicare coverage through private insurance companies.',
-  type: 'medicare-advantage'
+  description: 'Additional coverage to complement your primary health insurance.',
+  type: 'supplemental-health'
 };
 
 function FlyersSection({ productType }: { productType: string }) {

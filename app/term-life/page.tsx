@@ -1,47 +1,161 @@
 "use client"
 
-import { Shield } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Shield, Download, ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
+
 import Footer from '../components/footer';
 import QuoteForm from '../components/QuoteForm';
-import FlyersSection from '../components/FlyersSection';
+
+interface FlyerMetadata {
+  name: string;
+  description: string;
+  imageUrl: string;
+}
 
 const product = {
   name: 'TERM LIFE INSURANCE',
   icon: <Shield size={48} className="text-blue-600" />,
-  description: 'Affordable life insurance coverage for a specific period, providing financial protection for your loved ones.',
-  flyers: [
-    { title: 'Term Life Basics', description: 'Understanding the fundamentals of term life insurance' },
-    { title: 'Coverage Amount Guide', description: 'How much life insurance coverage do you need?' },
-    { title: 'Term Length Options', description: 'Choosing between 10, 20, or 30-year terms' },
-    { title: 'Premium Comparison', description: 'Comparing costs across different providers' },
-    { title: 'Health Requirements', description: 'Medical exams and health questionnaires' },
-    { title: 'Beneficiary Guide', description: 'Choosing and updating your beneficiaries' },
-    { title: 'Conversion Options', description: 'Converting term to permanent life insurance' },
-    { title: 'Application Process', description: 'Step-by-step guide to applying' },
-    { title: 'Underwriting Guide', description: 'What to expect during the approval process' },
-    { title: 'Age and Pricing', description: 'How age affects your premiums' },
-    { title: 'Renewal Information', description: 'What happens when your term expires' },
-    { title: 'Tax Benefits', description: 'Tax implications of life insurance proceeds' },
-    { title: 'Family Protection', description: 'Ensuring your family\'s financial security' },
-    { title: 'Mortgage Protection', description: 'Using term life to protect your home' },
-    { title: 'Income Replacement', description: 'Calculating income replacement needs' },
-    { title: 'Child Coverage', description: 'Term life insurance for children' },
-    { title: 'Group vs Individual', description: 'Employer coverage vs personal policies' },
-    { title: 'Lifestyle Factors', description: 'How smoking and health affect rates' },
-    { title: 'Claim Process', description: 'How beneficiaries file claims' },
-    { title: 'Policy Riders', description: 'Additional coverage options available' },
-    { title: 'No-Exam Options', description: 'Simplified issue life insurance' },
-    { title: 'Senior Coverage', description: 'Term life options for older adults' },
-    { title: 'Business Protection', description: 'Using term life for business needs' },
-    { title: 'Estate Planning', description: 'Term life in your estate plan' },
-    { title: 'Debt Protection', description: 'Covering loans and credit card debt' },
-    { title: 'Education Funding', description: 'Ensuring funds for children\'s education' },
-    { title: 'Special Circumstances', description: 'Coverage for unique situations' },
-    { title: 'Policy Maintenance', description: 'Keeping your policy in force' },
-    { title: 'Comparison Shopping', description: 'How to compare different policies' },
-    { title: 'Common Mistakes', description: 'Avoiding pitfalls when buying term life' }
-  ]
+  description: 'Affordable life insurance coverage for a specific period.',
+  type: 'term-life'
 };
+
+function FlyersSection({ productType }: { productType: string }) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [flyers, setFlyers] = useState<FlyerMetadata[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const flyersPerPage = 6;
+  
+  useEffect(() => {
+    const loadFlyers = async () => {
+      try {
+        const response = await fetch('/api/admin/flyers');
+        const data = await response.json();
+        if (data.success && data.flyers[productType]) {
+          setFlyers(data.flyers[productType].filter((f: FlyerMetadata) => f.imageUrl));
+        }
+      } catch (error) {
+        console.error('Error loading flyers:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadFlyers();
+  }, [productType]);
+  
+  // Calculate total pages
+  const totalPages = Math.ceil(flyers.length / flyersPerPage);
+  
+  // Get current flyers
+  const indexOfLastFlyer = currentPage * flyersPerPage;
+  const indexOfFirstFlyer = indexOfLastFlyer - flyersPerPage;
+  const currentFlyers = flyers.slice(indexOfFirstFlyer, indexOfLastFlyer);
+  
+  // Page navigation
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+  
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center">Loading flyers...</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (flyers.length === 0) {
+    return (
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center text-gray-600">No flyers available yet.</div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center text-blue-900 mb-8">Product Flyers & Resources</h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {currentFlyers.map((flyer, index) => (
+            <div 
+              key={index} 
+              className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
+            >
+              <div className="relative w-full h-48 mb-4 rounded overflow-hidden">
+                <Image
+                  src={flyer.imageUrl}
+                  alt={flyer.name || `Flyer ${index + 1}`}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              
+              <h3 className="text-lg font-semibold text-blue-800 mb-2">{flyer.name || `Flyer ${index + 1}`}</h3>
+              <p className="text-gray-600 mb-4">{flyer.description || 'No description available'}</p>
+              
+              <div className="flex justify-between items-center">
+                <a 
+                  href={`/api/download?url=${encodeURIComponent(flyer.imageUrl)}`}
+                  className="flex items-center gap-1 bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded-full text-sm transition-colors"
+                >
+                  <Download size={16} /> Download
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        {/* Pagination controls */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-4 mt-10">
+            <button 
+              onClick={prevPage} 
+              disabled={currentPage === 1}
+              className={`flex items-center gap-1 px-3 py-2 rounded ${
+                currentPage === 1 
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                  : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+              }`}
+            >
+              <ChevronLeft size={18} /> Previous
+            </button>
+            
+            <div className="text-gray-700">
+              Page {currentPage} of {totalPages}
+            </div>
+            
+            <button 
+              onClick={nextPage} 
+              disabled={currentPage === totalPages}
+              className={`flex items-center gap-1 px-3 py-2 rounded ${
+                currentPage === totalPages 
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                  : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+              }`}
+            >
+              Next <ChevronRight size={18} />
+            </button>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
 
 export default function ProductDetail() {
   return (
@@ -58,7 +172,7 @@ export default function ProductDetail() {
       </section>
 
       {/* Flyers Section */}
-      <FlyersSection flyers={product.flyers} productType="term-life" />
+      <FlyersSection productType={product.type} />
 
       {/* Quote Form */}
       <section className="py-16 bg-gray-100">

@@ -77,64 +77,64 @@ export default function QuoteForm({ insuranceType }: QuoteFormProps) {
             </div>
           )}
 
-          <div>
+        <div>
             <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
               Full Name
-            </label>
-            <input
-              type="text"
+          </label>
+          <input
+            type="text"
               id="fullName"
               name="fullName"
               required
               value={formData.fullName}
-              onChange={handleChange}
+            onChange={handleChange}
               className={`w-full px-4 py-2 border ${fieldErrors.fullName ? "border-red-500" : "border-gray-300"} rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
-            />
+          />
             {fieldErrors.fullName && <p className="text-red-500 text-xs mt-1">{fieldErrors.fullName}</p>}
-          </div>
+        </div>
 
-          <div>
+        <div>
             <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">
               Phone Number
-            </label>
-            <input
+          </label>
+          <input
               type="tel"
               id="phoneNumber"
               name="phoneNumber"
               required
               value={formData.phoneNumber}
-              onChange={handleChange}
+            onChange={handleChange}
               className={`w-full px-4 py-2 border ${fieldErrors.phoneNumber ? "border-red-500" : "border-gray-300"} rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
-            />
+          />
             {fieldErrors.phoneNumber && <p className="text-red-500 text-xs mt-1">{fieldErrors.phoneNumber}</p>}
-          </div>
+        </div>
 
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
               Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
               required
-              value={formData.email}
-              onChange={handleChange}
+            value={formData.email}
+            onChange={handleChange}
               className={`w-full px-4 py-2 border ${fieldErrors.email ? "border-red-500" : "border-gray-300"} rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
-            />
+          />
             {fieldErrors.email && <p className="text-red-500 text-xs mt-1">{fieldErrors.email}</p>}
-          </div>
+        </div>
 
-          <div>
+        <div>
             <label htmlFor="insuranceType" className="block text-sm font-medium text-gray-700 mb-1">
               Type of Insurance
-            </label>
-            <select
+          </label>
+          <select
               id="insuranceType"
               name="insuranceType"
               required
               value={formData.insuranceType}
-              onChange={handleChange}
+            onChange={handleChange}
               className={`w-full px-4 py-2 border ${fieldErrors.insuranceType ? "border-red-500" : "border-gray-300"} rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
             >
               <option value="">Select Insurance Type</option>
@@ -153,12 +153,12 @@ export default function QuoteForm({ insuranceType }: QuoteFormProps) {
               <option value="Universal Life Insurance">Universal Life Insurance</option>
               <option value="Final Expense Insurance">Final Expense Insurance</option>
               <option value="Group Life Insurance">Group Life Insurance</option>
-            </select>
+          </select>
             {fieldErrors.insuranceType && <p className="text-red-500 text-xs mt-1">{fieldErrors.insuranceType}</p>}
-          </div>
+      </div>
 
-          <button
-            type="submit"
+        <button
+          type="submit"
             className="w-full bg-blue-800 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center"
             disabled={isSubmitting}
           >
@@ -170,9 +170,9 @@ export default function QuoteForm({ insuranceType }: QuoteFormProps) {
             ) : (
               "Submit Quote Request"
             )}
-          </button>
+        </button>
         </form>
       )}
-    </div>
+      </div>
   );
 } 

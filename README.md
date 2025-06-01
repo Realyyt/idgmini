@@ -1,36 +1,180 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Insurance Portal - Next.js Application
 
-## Getting Started
+A modern insurance portal with admin dashboard for managing flyer images across health and life insurance products.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Public Website
+- **Product Showcase**: Display health and life insurance products
+- **Interactive Navigation**: Smooth product category switching
+- **Responsive Design**: Works on all devices
+- **Product Pages**: Detailed information for each insurance type
+
+### Admin Dashboard
+- **🔐 Secure Authentication**: Protected login system
+- **📁 Image Management**: Upload, view, and delete flyer images
+- **📊 Dashboard Analytics**: Track uploaded images and statistics
+- **🔍 Search & Filter**: Find products quickly
+- **📱 Responsive**: Mobile-friendly admin interface
+
+## 🛠️ Setup & Installation
+
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
+
+### Local Development
+
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd nextjs-app
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   Create a `.env.local` file:
+   ```env
+   ADMIN_USERNAME=AdminIDG
+   ADMIN_PASSWORD=Idg#$#12$
+   NODE_ENV=development
+   ```
+
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Access the application**
+   - Public Website: http://localhost:3000
+   - Admin Login: http://localhost:3000/admin/login
+   - Admin Dashboard: http://localhost:3000/admin (after login)
+
+## 🔐 Admin Access
+
+- **URL**: `/admin/login`
+
+
+⚠️ **Change these credentials in production!**
+
+## 🚀 Deployment
+
+### Quick Deploy to Vercel
+
+1. **Install Vercel CLI**
+   ```bash
+   npm i -g vercel
+   ```
+
+2. **Deploy**
+   ```bash
+   vercel --prod
+   ```
+
+3. **Set Environment Variables**
+   In your Vercel dashboard:
+   - `ADMIN_USERNAME` = your_username
+   - `ADMIN_PASSWORD` = your_secure_password
+   - `NODE_ENV` = production
+
+### Deploy to Other Platforms
+
+See the detailed [DEPLOYMENT.md](./DEPLOYMENT.md) guide for:
+- Netlify deployment
+- Railway deployment
+- Render deployment
+- Custom server setup
+
+## 📁 Project Structure
+
+```
+nextjs-app/
+├── app/
+│   ├── admin/
+│   │   ├── login/page.tsx       # Admin login page
+│   │   └── page.tsx             # Admin dashboard
+│   ├── api/
+│   │   └── admin/
+│   │       ├── auth/route.ts    # Authentication API
+│   │       ├── flyers/route.ts  # File upload API
+│   │       └── products/route.ts # Products API
+│   ├── components/
+│   │   └── footer.tsx           # Shared footer component
+│   ├── [productId]/page.tsx     # Dynamic product pages
+│   ├── layout.tsx               # Root layout
+│   └── page.tsx                 # Homepage
+├── public/
+│   └── flyers/                  # Uploaded flyer images
+└── DEPLOYMENT.md                # Detailed deployment guide
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔒 Security Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Session-based Authentication**: Secure HTTP-only cookies
+- **Protected API Routes**: All admin endpoints require authentication
+- **File Upload Validation**: Type and size restrictions
+- **Path Traversal Protection**: Secure file handling
+- **CSRF Protection**: SameSite cookie policy
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📝 Admin Dashboard Features
 
-## Learn More
+### Image Management
+- Upload images for 30 flyer slots per product
+- Replace existing images
+- Delete unwanted images
+- View full-size previews
 
-To learn more about Next.js, take a look at the following resources:
+### Products Included
+**Health Insurance** (12 products):
+- Accident Insurance, ACA Marketplace Plans, Critical Illness
+- Dental & Vision, Group Health Plans, Individual & Family Plans
+- Short-Term Medical, Supplemental Health, Medicare options
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Life Insurance** (8 products):
+- Term Life, Whole Life, Universal Life, Indexed Universal Life
+- Final Expense, Group Life, Survivorship Life, AD&D Insurance
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Dashboard Analytics
+- Total products count
+- Images uploaded vs. total slots
+- Category breakdowns
+- Upload progress tracking
 
-## Deploy on Vercel
+## 🛡️ Production Security Checklist
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [ ] Change default admin credentials
+- [ ] Use strong passwords (12+ characters)
+- [ ] Enable HTTPS on your domain
+- [ ] Set secure environment variables
+- [ ] Configure proper session management
+- [ ] Set up regular backups
+- [ ] Monitor admin access logs
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🆘 Troubleshooting
+
+### Common Issues
+
+1. **Build Errors**: Run `npm run build` to check for TypeScript/ESLint issues
+2. **Authentication Issues**: Verify environment variables are set correctly
+3. **File Upload Issues**: Check file permissions and storage limits
+4. **Route Not Found**: Ensure all dynamic routes are properly configured
+
+### Support
+
+For deployment issues, check:
+1. Environment variables are correctly set
+2. Build process completed successfully
+3. All dependencies are installed
+4. Node.js version compatibility
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+**Need help?** Check the [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions or create an issue in the repository.

@@ -84,10 +84,10 @@ export default function Home() {
               Life Insurance
             </button>
           </div>
-          <a href="/contact" className="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-lg font-semibold inline-flex items-center">
+          <Link href="/contact" className="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-lg font-semibold inline-flex items-center">
             <Phone size={20} className="mr-2" />
             Get Help from a Licensed Insurance Provider
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -189,17 +189,17 @@ export default function Home() {
                     <p className="text-gray-600 mb-4">{product.desc}</p>
                     <div className="flex gap-3 mt-4">
                       <Link
-                        href={`/products/${product.name}`}
+                        href={`/${product.name}`}
                         className="text-blue-600 hover:text-blue-800 font-medium flex items-center"
                       >
                         <ChevronRight size={16} className="mr-1" />
                         Learn More
                       </Link>
                       <Link
-                        href={`/products/${product.name}#quote`}
+                        href={`/${product.name}#quote`}
                         className="text-green-600 hover:text-green-800 font-medium flex items-center"
                       >
-                        <Calendar size={16} className="mr-1" />
+                        <Phone size={16} className="mr-1" />
                         Get a Quote
                       </Link>
                     </div>
@@ -236,17 +236,17 @@ export default function Home() {
                     <p className="text-gray-600 mb-4">{product.desc}</p>
                     <div className="flex gap-3 mt-4">
                       <Link
-                        href={`/products/${product.name}`}
+                        href={`/${product.name}`}
                         className="text-blue-600 hover:text-blue-800 font-medium flex items-center"
                       >
                         <ChevronRight size={16} className="mr-1" />
                         Learn More
                       </Link>
                       <Link
-                        href={`/products/${product.name}#quote`}
+                        href={`/${product.name}#quote`}
                         className="text-green-600 hover:text-green-800 font-medium flex items-center"
                       >
-                        <Calendar size={16} className="mr-1" />
+                        <Phone size={16} className="mr-1" />
                         Get a Quote
                       </Link>
                     </div>
@@ -339,18 +339,20 @@ export default function Home() {
             Get personalized advice and quotes today.
           </p>
           <div className="flex flex-col md:flex-row gap-4 justify-center">
-            <button
+            <Link
+              href="/contact"
               className="bg-blue-800 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold inline-flex items-center"
             >
               <Phone size={20} className="mr-2" />
-              <a href='/contact'>Schedule a Call</a>
-            </button>
-            <button
+              Schedule a Call
+            </Link>
+            <Link
+              href="/contact"
               className="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-lg font-semibold inline-flex items-center"
             >
               <HelpCircle size={20} className="mr-2" />
-              <a href='/contact'>Compare Plans</a>
-            </button>
+              Compare Plans
+            </Link>
           </div>
         </div>
       </section>

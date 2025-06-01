@@ -35,7 +35,7 @@ export async function submitQuoteForm(formData: QuoteFormData): Promise<QuoteFor
 
     // Send email
     await apiInstance.sendTransacEmail(sendSmtpEmail);
-    
+
     return {
       success: true,
       message: 'Thank you for your interest! We will contact you shortly to discuss your insurance needs.'

@@ -17,7 +17,7 @@ interface FlyersResponse {
 export async function GET(): Promise<NextResponse<FlyersResponse>> {
   try {
     const { data: flyers, error } = await supabase
-      .from('flyers')
+      .from('flyer_metadata')
       .select('*');
 
     if (error) {
@@ -27,12 +27,24 @@ export async function GET(): Promise<NextResponse<FlyersResponse>> {
 
     // Group flyers by product type
     const groupedFlyers: Record<string, FlyerMetadata[]> = {};
-    flyers.forEach((flyer: FlyerMetadata) => {
-      const productType = flyer.imageUrl.split('/')[0];
-      if (!groupedFlyers[productType]) {
-        groupedFlyers[productType] = [];
+    flyers.forEach((flyer: any) => {
+      try {
+        if (!flyer.image_url || flyer.image_url === 'EMPTY') {
+          console.warn('Skipping flyer without imageUrl:', flyer);
+          return;
+        }
+        const productType = flyer.product_type || flyer.image_url.split('/')[0];
+        if (!groupedFlyers[productType]) {
+          groupedFlyers[productType] = [];
+        }
+        groupedFlyers[productType].push({
+          name: flyer.name,
+          description: flyer.description,
+          imageUrl: flyer.image_url,
+        });
+      } catch (err) {
+        console.error('Error processing flyer:', { flyer, error: err });
       }
-      groupedFlyers[productType].push(flyer);
     });
 
     return NextResponse.json({ success: true, flyers: groupedFlyers });

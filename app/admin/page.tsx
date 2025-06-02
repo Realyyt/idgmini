@@ -258,27 +258,27 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200/50 sticky top-0 z-40">
-        <div className="container mx-auto px-6 py-6">
-          <div className="flex items-center justify-between">
+        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Flyer Management Dashboard
               </h1>
-              <p className="text-gray-600 mt-2 text-lg">Upload and manage flyer images for all insurance products</p>
+              <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-lg">Upload and manage flyer images for all insurance products</p>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               <button
                 onClick={loadFlyerImages}
-                className="flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl text-sm sm:text-base"
               >
-                <RefreshCw size={18} />
+                <RefreshCw size={16} className="sm:w-[18px] sm:h-[18px]" />
                 <span className="font-medium">Refresh</span>
               </button>
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-2 bg-red-600 text-white px-4 py-3 rounded-xl hover:bg-red-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="flex items-center gap-2 bg-red-600 text-white px-3 sm:px-4 py-2 sm:py-3 rounded-xl hover:bg-red-700 transition-all duration-200 shadow-lg hover:shadow-xl text-sm sm:text-base"
               >
-                <LogOut size={18} />
+                <LogOut size={16} className="sm:w-[18px] sm:h-[18px]" />
                 <span className="font-medium">Logout</span>
               </button>
             </div>
@@ -287,52 +287,52 @@ export default function AdminDashboard() {
       </header>
 
       {/* Statistics Cards */}
-      <section className="container mx-auto px-6 py-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-blue-100 rounded-xl">
-                <Briefcase className="w-6 h-6 text-blue-600" />
+      <section className="container mx-auto px-4 sm:px-6 py-4 sm:py-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
+          <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-100">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="p-2 sm:p-3 bg-blue-100 rounded-lg sm:rounded-xl">
+                <Briefcase className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
               </div>
               <div>
-                <p className="text-gray-500 text-sm font-medium">Total Products</p>
-                <p className="text-2xl font-bold text-gray-900">{totalProducts}</p>
+                <p className="text-gray-500 text-xs sm:text-sm font-medium">Total Products</p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900">{totalProducts}</p>
               </div>
             </div>
           </div>
           
-          <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-emerald-100 rounded-xl">
-                <Heart className="w-6 h-6 text-emerald-600" />
+          <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-100">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="p-2 sm:p-3 bg-emerald-100 rounded-lg sm:rounded-xl">
+                <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" />
               </div>
               <div>
-                <p className="text-gray-500 text-sm font-medium">Health Products</p>
-                <p className="text-2xl font-bold text-gray-900">{healthProducts}</p>
+                <p className="text-gray-500 text-xs sm:text-sm font-medium">Health Products</p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900">{healthProducts}</p>
               </div>
             </div>
           </div>
           
-          <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-blue-100 rounded-xl">
-                <Shield className="w-6 h-6 text-blue-600" />
+          <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-100">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="p-2 sm:p-3 bg-blue-100 rounded-lg sm:rounded-xl">
+                <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
               </div>
               <div>
-                <p className="text-gray-500 text-sm font-medium">Life Products</p>
-                <p className="text-2xl font-bold text-gray-900">{lifeProducts}</p>
+                <p className="text-gray-500 text-xs sm:text-sm font-medium">Life Products</p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900">{lifeProducts}</p>
               </div>
             </div>
           </div>
           
-          <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-purple-100 rounded-xl">
-                <TrendingUp className="w-6 h-6 text-purple-600" />
+          <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-100">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="p-2 sm:p-3 bg-purple-100 rounded-lg sm:rounded-xl">
+                <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
               </div>
               <div>
-                <p className="text-gray-500 text-sm font-medium">Images Uploaded</p>
-                <p className="text-2xl font-bold text-gray-900">{totalUploaded}/{totalSlots}</p>
+                <p className="text-gray-500 text-xs sm:text-sm font-medium">Images Uploaded</p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900">{totalUploaded}/{totalSlots}</p>
               </div>
             </div>
           </div>
@@ -340,15 +340,15 @@ export default function AdminDashboard() {
       </section>
 
       {/* Filters */}
-      <section className="container mx-auto px-6 mb-8">
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-          <div className="flex flex-col lg:flex-row gap-6 items-center">
-            <div className="flex items-center gap-3">
-              <Filter size={20} className="text-gray-500" />
+      <section className="container mx-auto px-4 sm:px-6 mb-6 sm:mb-8">
+        <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-100 p-4 sm:p-6">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start sm:items-center">
+            <div className="flex items-center gap-3 w-full sm:w-auto">
+              <Filter size={18} className="text-gray-500 flex-shrink-0" />
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50 font-medium"
+                className="w-full sm:w-auto border border-gray-200 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50 font-medium text-sm sm:text-base"
               >
                 <option value="all">All Categories</option>
                 <option value="health">Health Insurance Products</option>
@@ -356,18 +356,18 @@ export default function AdminDashboard() {
               </select>
             </div>
             
-            <div className="flex items-center gap-3 flex-1 max-w-md">
-              <Search size={20} className="text-gray-500" />
+            <div className="flex items-center gap-3 flex-1 w-full sm:w-auto">
+              <Search size={18} className="text-gray-500 flex-shrink-0" />
               <input
                 type="text"
                 placeholder="Search products..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="flex-1 border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50"
+                className="w-full border border-gray-200 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50 text-sm sm:text-base"
               />
             </div>
 
-            <div className="text-gray-600 font-medium bg-gray-100 px-4 py-2 rounded-xl">
+            <div className="text-gray-600 font-medium bg-gray-100 px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl text-sm sm:text-base whitespace-nowrap">
               {filteredProducts.length} products found
             </div>
           </div>
@@ -375,21 +375,21 @@ export default function AdminDashboard() {
       </section>
 
       {/* Main Content */}
-      <main className="container mx-auto px-6 pb-8">
-        <div className="grid lg:grid-cols-4 gap-8">
+      <main className="container mx-auto px-4 sm:px-6 pb-6 sm:pb-8">
+        <div className="grid lg:grid-cols-4 gap-4 sm:gap-8">
           {/* Product List */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-              <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-blue-50">
-                <h2 className="text-xl font-bold text-gray-900">Insurance Products</h2>
-                <p className="text-gray-600 text-sm mt-1">Select a product to manage</p>
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+              <div className="p-4 sm:p-6 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-blue-50">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-900">Insurance Products</h2>
+                <p className="text-gray-600 text-xs sm:text-sm mt-1">Select a product to manage</p>
               </div>
-              <div className="max-h-96 overflow-y-auto">
+              <div className="max-h-[calc(100vh-24rem)] overflow-y-auto">
                 {filteredProducts.map(([key, product]) => (
                   <button
                     key={key}
                     onClick={() => setSelectedProduct(key)}
-                    className={`w-full text-left p-4 border-b border-gray-50 hover:bg-gray-50 transition-all duration-200 ${
+                    className={`w-full text-left p-3 sm:p-4 border-b border-gray-50 hover:bg-gray-50 transition-all duration-200 ${
                       selectedProduct === key ? `${categoryBackgrounds[product.category as keyof typeof categoryBackgrounds]} border-l-4 border-l-blue-500` : ''
                     }`}
                   >
@@ -404,7 +404,7 @@ export default function AdminDashboard() {
                         <div className="text-xs text-gray-500 mt-1">
                           {product.flyerCount} flyers • {getProductImages(key).length} uploaded
                         </div>
-                        <div className={`text-xs mt-2 px-3 py-1 rounded-full inline-block font-medium ${
+                        <div className={`text-xs mt-2 px-2 sm:px-3 py-1 rounded-full inline-block font-medium ${
                           product.category === 'health' 
                             ? 'bg-emerald-100 text-emerald-700' 
                             : 'bg-blue-100 text-blue-700'
@@ -422,23 +422,23 @@ export default function AdminDashboard() {
           {/* Flyer Management */}
           <div className="lg:col-span-3">
             {selectedProduct ? (
-              <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-                <div className={`p-6 border-b border-gray-100 bg-gradient-to-r ${categoryColors[products[selectedProduct]?.category as keyof typeof categoryColors]} text-white`}>
-                  <div className="flex items-center gap-4">
-                    <div className="p-3 bg-white/20 rounded-xl">
+              <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                <div className={`p-4 sm:p-6 border-b border-gray-100 bg-gradient-to-r ${categoryColors[products[selectedProduct]?.category as keyof typeof categoryColors]} text-white`}>
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="p-2 sm:p-3 bg-white/20 rounded-lg sm:rounded-xl">
                       {categoryIcons[products[selectedProduct]?.category as keyof typeof categoryIcons]}
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold">{products[selectedProduct]?.name}</h2>
-                      <p className="text-white/90 mt-1">
+                      <h2 className="text-xl sm:text-2xl font-bold">{products[selectedProduct]?.name}</h2>
+                      <p className="text-white/90 mt-1 text-sm sm:text-base">
                         Manage flyer images • {products[selectedProduct]?.flyerCount} total flyers • {getProductImages(selectedProduct).length} uploaded
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                <div className="p-4 sm:p-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
                     {getFlyerIndexes(selectedProduct).map((index) => {
                       const flyerKey = `${selectedProduct}_${index}`;
                       const existingImages = getProductImages(selectedProduct);
@@ -450,9 +450,9 @@ export default function AdminDashboard() {
                       return (
                         <div
                           key={index}
-                          className="group border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-all duration-200 hover:border-blue-300"
+                          className="group border border-gray-200 rounded-xl p-3 sm:p-4 hover:shadow-lg transition-all duration-200 hover:border-blue-300"
                         >
-                          <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg mb-4 overflow-hidden relative">
+                          <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg mb-3 sm:mb-4 overflow-hidden relative">
                             {flyer.imageUrl ? (
                               <div className="relative h-full">
                                 <Image
@@ -476,12 +476,12 @@ export default function AdminDashboard() {
                               <div className="h-full flex items-center justify-center text-gray-400">
                                 {isUploading ? (
                                   <div className="flex flex-col items-center gap-2">
-                                    <RefreshCw className="animate-spin" size={24} />
+                                    <RefreshCw className="animate-spin" size={20} />
                                     <span className="text-xs">Uploading...</span>
                                   </div>
                                 ) : (
                                   <div className="flex flex-col items-center gap-2">
-                                    <Upload size={24} />
+                                    <Upload size={20} />
                                     <span className="text-xs">No image</span>
                                   </div>
                                 )}
@@ -489,10 +489,10 @@ export default function AdminDashboard() {
                             )}
                           </div>
 
-                          <div className="text-sm font-semibold text-gray-900 mb-3">Flyer #{index + 1}</div>
+                          <div className="text-sm font-semibold text-gray-900 mb-2 sm:mb-3">Flyer #{index + 1}</div>
                           
                           {flyer.imageUrl ? (
-                            <div className="space-y-3">
+                            <div className="space-y-2 sm:space-y-3">
                               <input
                                 type="file"
                                 accept="image/*"
@@ -509,9 +509,9 @@ export default function AdminDashboard() {
                               <button
                                 onClick={() => document.getElementById(`file-${selectedProduct}-${index}`)?.click()}
                                 disabled={isUploading}
-                                className="w-full flex items-center justify-center gap-2 bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                                className="w-full flex items-center justify-center gap-2 bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                               >
-                                <Upload size={16} />
+                                <Upload size={14} className="sm:w-4 sm:h-4" />
                                 {isUploading ? 'Updating...' : 'Update Image'}
                               </button>
                             </div>
@@ -526,12 +526,12 @@ export default function AdminDashboard() {
                                 }
                               }}
                               disabled={isUploading}
-                              className="w-full text-xs file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 file:transition-colors cursor-pointer"
+                              className="w-full text-xs file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 file:transition-colors cursor-pointer"
                             />
                           )}
 
                           {isEditing ? (
-                            <div className="space-y-4 mt-2">
+                            <div className="space-y-3 sm:space-y-4 mt-2">
                               <input
                                 type="text"
                                 value={flyer.name}
@@ -540,7 +540,7 @@ export default function AdminDashboard() {
                                   newFlyers[index] = { ...flyer, name: e.target.value };
                                   setFlyerImages({ ...flyerImages, [selectedProduct]: newFlyers });
                                 }}
-                                className="w-full p-2 border rounded"
+                                className="w-full p-2 border rounded text-sm"
                                 placeholder="Flyer Name"
                               />
                               <textarea
@@ -550,20 +550,20 @@ export default function AdminDashboard() {
                                   newFlyers[index] = { ...flyer, description: e.target.value };
                                   setFlyerImages({ ...flyerImages, [selectedProduct]: newFlyers });
                                 }}
-                                className="w-full p-2 border rounded"
+                                className="w-full p-2 border rounded text-sm"
                                 placeholder="Flyer Description"
                                 rows={3}
                               />
                               <div className="flex space-x-2">
                                 <button
                                   onClick={() => handleEditFlyer(selectedProduct, index, flyer)}
-                                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                  className="px-3 sm:px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
                                 >
                                   Save
                                 </button>
                                 <button
                                   onClick={() => setEditingFlyer(null)}
-                                  className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                                  className="px-3 sm:px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 text-sm"
                                 >
                                   Cancel
                                 </button>
@@ -572,12 +572,12 @@ export default function AdminDashboard() {
                           ) : (
                             <div className="flex justify-between items-start mt-2">
                               <div>
-                                <h4 className="font-medium">{flyer.name || `Flyer ${index + 1}`}</h4>
-                                <p className="text-sm text-gray-600">{flyer.description || 'No description'}</p>
+                                <h4 className="font-medium text-sm">{flyer.name || `Flyer ${index + 1}`}</h4>
+                                <p className="text-xs sm:text-sm text-gray-600">{flyer.description || 'No description'}</p>
                               </div>
                               <button
                                 onClick={() => setEditingFlyer({ productType: selectedProduct, index })}
-                                className="text-blue-500 hover:text-blue-600"
+                                className="text-blue-500 hover:text-blue-600 text-sm"
                               >
                                 Edit
                               </button>
@@ -590,13 +590,13 @@ export default function AdminDashboard() {
                 </div>
               </div>
             ) : (
-              <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-12 text-center">
+              <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-100 p-6 sm:p-12 text-center">
                 <div className="max-w-md mx-auto">
-                  <div className="p-4 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl w-20 h-20 mx-auto mb-6 flex items-center justify-center">
-                    <Upload size={32} className="text-blue-600" />
+                  <div className="p-3 sm:p-4 bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl sm:rounded-2xl w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 flex items-center justify-center">
+                    <Upload size={24} className="text-blue-600 sm:w-8 sm:h-8" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">Select a Product</h3>
-                  <p className="text-gray-600 text-lg">Choose a product from the list to manage its flyer images</p>
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">Select a Product</h3>
+                  <p className="text-gray-600 text-base sm:text-lg">Choose a product from the list to manage its flyer images</p>
                 </div>
               </div>
             )}
